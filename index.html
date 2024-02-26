@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vacation Request</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url('boswchr.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(4px) saturate(120%);
+            background-color: rgba(255, 255, 255, 0.25);
+        }
+
+        h3 {
+            text-align: center;
+            margin-top: 2rem;
+            color: #0a3653;
+        }
+
+        input,
+        textarea {
+            padding: 0.5rem;
+            border-radius: 16px;
+            border: none;
+            font-size: 1rem;
+            font-family: inherit;
+            color: #333;
+            background-color: white;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="date"],
+        textarea {
+            box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        input[type="submit"] {
+            width: fit-content;
+            background-color: #a51e2a;
+            color: white;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border: none;
+            box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
+            margin: auto;
+            font-size: 1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: all 0.2s ease-in-out;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #8a1a25;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+
+        .logo img {
+            width: 250px;
+        }
+
+        .all {
+            background-color: #8a1a25;
+        }
+
+        form {
+            width: 600px;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: auto;
+            background-color: #f6f9fc;
+            padding: 1rem;
+            border-radius: 16px;
+            margin-top: 2rem;
+        }
+
+        input[type="submit"] {
+            width: fit-content;
+            background-color: #a51e2a;
+            color: white;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border: none;
+            box-shadow: 1px 1px 5px black;
+            margin: auto;
+        }
+
+        #vacationDays {
+            margin-top: 0.5rem;
+            color: #8a1a25;
+            font-weight: bold;
+        }
+
+        .review {
+            background-color: #f6f9fc;
+            padding-bottom: 4rem;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .review p {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #000102;
+        }
+
+        section {
+            position: relative;
+            z-index: 0;
+            height: 100vh;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)),
+                url('background-image-url') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 100%);
+        }
+
+        .review button:hover {
+            background-color: #910f1a;
+        }
+
+        @media screen and (max-width: 600px) {
+            form {
+                width: 390px;
+            }
+        }
+
+        @media screen and (min-width: 601px) {
+            form {
+                width: 600px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <section>
+        <div class="logo">
+            <img src="01.png" alt="Logo" />
+        </div>
+
+        <h3 style="text-align: center;">Submit Your Vacation Request</h3>
+        <form action="https://formspree.io/f/xjvdpbaw" method="post">
+            <input name="full_name" type="text" placeholder="Your Full Name (required)">
+            <input name="email" type="email" placeholder="Your Email (required)">
+            <input name="phone_number" type="tel" placeholder="Your Phone Number">
+            <input name="start_date" type="date" placeholder="Start Date (required)" id="startDate" onchange="calculateDays()">
+            <input name="end_date" type="date" placeholder="End Date (required)" id="endDate" onchange="calculateDays()">
+            <div id="vacationDays"></div>
+            <textarea name="message" name="" id="" cols="30" rows="10" placeholder="Additional Comments"></textarea>
+            <input type="submit" value="Submit Request">
+
+            <div class="review">
+                <p>Thank you for submitting your vacation request. We'll review and process it as soon as possible.</p>
+            </div>
+        </form>
+    </section>
+
+    <script>
+        function calculateDays() {
+            const startDate = new Date(document.getElementById('startDate').value);
+            const endDate = new Date(document.getElementById('endDate').value);
+
+            if (startDate && endDate && startDate <= endDate) {
+                const timeDiff = Math.abs(endDate - startDate);
+                const days = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+
+                document.getElementById('vacationDays').innerText = `Duration: ${days} days`;
+            } else {
+                document.getElementById('vacationDays').innerText = '';
+            }
+        }
+    </script>
+</body>
+
+</html>
